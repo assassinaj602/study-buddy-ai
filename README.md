@@ -7,6 +7,9 @@
 
 Study Buddy AI is an intelligent, multi-modal academic assistant powered by advanced AI technology. It helps students learn more effectively by providing personalized explanations, processing various file formats, and offering interactive learning experiences.
 
+## 🌐 Live Demo
+**Try it now**: [https://assassinaj602.github.io/study-buddy-ai/](https://assassinaj602.github.io/study-buddy-ai/)
+
 ![Study Buddy AI Interface](./screenshots/main-interface.png)
 
 ## ✨ Features
