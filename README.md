@@ -46,7 +46,7 @@ Study Buddy AI is an intelligent, multi-modal academic assistant powered by adva
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/study-buddy-ai.git
+   git clone https://github.com/assassinaj602/study-buddy-ai.git
    cd study-buddy-ai
    ```
 
@@ -213,9 +213,9 @@ If you encounter any issues or have questions:
 
 ## 📊 Project Stats
 
-![GitHub stars](https://img.shields.io/github/stars/yourusername/study-buddy-ai?style=social)
-![GitHub forks](https://img.shields.io/github/forks/yourusername/study-buddy-ai?style=social)
-![GitHub issues](https://img.shields.io/github/issues/yourusername/study-buddy-ai)
-![GitHub pull requests](https://img.shields.io/github/issues-pr/yourusername/study-buddy-ai)
+![GitHub stars](https://img.shields.io/github/stars/assassinaj602/study-buddy-ai?style=social)
+![GitHub forks](https://img.shields.io/github/forks/assassinaj602/study-buddy-ai?style=social)
+![GitHub issues](https://img.shields.io/github/issues/assassinaj602/study-buddy-ai)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/assassinaj602/study-buddy-ai)
 
 *Last updated: July 2025*
