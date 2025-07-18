@@ -884,8 +884,48 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.0.0/mammoth.browser.min.js"></script>
     <script>
-        const API_KEY = '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';
-        const API_URL = 'https://openrouter.ai/api/v1/chat/completions';
+        // =================================================
+        // 🔑 CONFIGURATION - LLM API SETTINGS
+        // =================================================
+        
+        const LLM_API_KEY = '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';
+        const LLM_API_URL = 'https://openrouter.ai/api/v1/chat/completions';
+        const LLM_MODEL = 'deepseek/deepseek-r1-0528-qwen3-8b:free';
+
+        // Validate API configuration
+        if (!LLM_API_KEY || LLM_API_KEY.length < 10) {
+            console.error('⚠️ LLM API KEY NOT SET!');
+        } else {
+            console.log('✅ LLM API Configuration loaded successfully');
+            console.log(`📡 Model: ${LLM_MODEL}`);
+            console.log(`🔗 API URL: ${LLM_API_URL}`);
+            console.log('🔑 API Key: ' + LLM_API_KEY.substring(0, 20) + '...');
+        }
+
+        // Test API connection function
+        async function testAPIConnection() {
+            try {
+                const testResponse = await fetch(LLM_API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${LLM_API_KEY}`,
+                        'HTTP-Referer': 'http://localhost:8080',
+                        'X-Title': 'Study Buddy AI'
+                    },
+                    body: JSON.stringify({
+                        model: LLM_MODEL,
+                        messages: [{ role: 'user', content: 'test' }],
+                        max_tokens: 1
+                    })
+                });
+                console.log('🌐 API Connection Status:', testResponse.status);
+                return testResponse.ok;
+            } catch (error) {
+                console.error('❌ API Connection Failed:', error.message);
+                return false;
+            }
+        }
 
         let chatMessages = document.getElementById('chatMessages');
         let userInput = document.getElementById('userInput');
@@ -908,7 +948,14 @@
         let streamingStopped = false;
         let lastUserMessage = '';
 
-        async function sendMessage(remake = false) {            const userMessage = userInput.value.trim();
+        async function sendMessage(remake = false) {
+            // Validate API key before sending
+            if (!LLM_API_KEY || LLM_API_KEY.length < 10) {
+                appendMessage('❌ Error: LLM API key not configured properly.', 'ai-message');
+                return;
+            }
+
+            const userMessage = userInput.value.trim();
             if (!userMessage && uploadedFiles.size === 0) return;
             lastUserMessage = userMessage;
 
@@ -979,15 +1026,15 @@
             try {
                 console.log('Sending request to OpenRouter API...');
                 const requestBody = {
-                    model: "deepseek/deepseek-r1-0528-qwen3-8b:free",
+                    model: LLM_MODEL,
                     messages: messageHistory
                 };
                 console.log('Request body:', JSON.stringify(requestBody, null, 2));
-                const response = await fetch(API_URL, {
+                const response = await fetch(LLM_API_URL, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer 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`,
+                        'Authorization': `Bearer ${LLM_API_KEY}`,
                         'HTTP-Referer': 'http://localhost:8080',
                         'X-Title': 'Study Buddy AI'
                     },
@@ -1014,10 +1061,12 @@
             } catch (error) {
                 appendMessage('Sorry, I encountered an error. Please try again.', 'ai-message');
                 console.error('Error:', error);
+            } finally {
+                // Remove loading message
+                const loadingMessages = document.querySelectorAll('.loading-message');
+                loadingMessages.forEach(msg => msg.remove());
             }
 
-            // Hide loading spinner
-            loading.style.display = 'none';
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
@@ -1577,15 +1626,15 @@
             
             try {
                 const requestBody = {
-                    model: "deepseek/deepseek-r1-0528-qwen3-8b:free",
+                    model: LLM_MODEL,
                     messages: messageHistory
                 };
                 
-                const response = await fetch(API_URL, {
+                const response = await fetch(LLM_API_URL, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer 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`,
+                        'Authorization': `Bearer ${LLM_API_KEY}`,
                         'HTTP-Referer': 'http://localhost:8080',
                         'X-Title': 'Study Buddy AI'
                     },
@@ -1608,9 +1657,12 @@
             } catch (error) {
                 appendMessage('Sorry, I encountered an error. Please try again.', 'ai-message');
                 console.error('Error:', error);
+            } finally {
+                // Remove loading message
+                const loadingMessages = document.querySelectorAll('.loading-message');
+                loadingMessages.forEach(msg => msg.remove());
             }
 
-            loading.style.display = 'none';
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
     </script>
